@@ -146,34 +146,49 @@ for cols in CC_465_ws["A:C"]:
             ws.cell(row = m, column=3).value = cell.value
             ws.cell(row = m, column=3).number_format = openpyxl.styles.numbers.builtin_format_code(3)  # '#,##0'
             m+=1
+# 마지막 총합 삭제
+ws.delete_rows(ws.max_row)
+
 ######### 삭제 조건에 따라 행 삭제
+ws['H1'] = 'Delete' # title
+# final_ws = wb.create_sheet('Final')
 for cell in ws["B"]:
     if cell.row == 1:
         continue
     cell.value = str(cell.value)
-    if cell.value == '91490000' or cell.value == '91980130':
-        if 'CS' in ws["E"+cell.coordinate[1:]].value:
-            x = int(cell.coordinate[1:])
-            for y in range(1, ws.max_column + 1):
-                ws.cell(row=x, column=y).value = ''
-    if cell.value == '81210000' or cell.value == '81251100' or cell.value == '81230000':
-        if 'SEG' in ws["E" + cell.coordinate[1:]].value:
-            x = int(cell.coordinate[1:])
-            for y in range(1, ws.max_column + 1):
-                ws.cell(row=x, column=y).value = ''
-    if ws["F"+cell.coordinate[1:]].value == '60020':
-        x = int(cell.coordinate[1:])
-        for y in range(1, ws.max_column + 1):
-            ws.cell(row=x, column=y).value = ''
+    try:
+        if cell.value == '91490000' or cell.value == '91980130':
+            if 'CS' in ws["E"+cell.coordinate[1:]].value:
+                ws["H" + cell.coordinate[1:]].value = 'Delete'
+        if cell.value == '81210000' or cell.value == '81251100' or cell.value == '81230000':
+            if 'SEG' in ws["E" + cell.coordinate[1:]].value:
+                ws["H" + cell.coordinate[1:]].value = 'Delete'
+        if ws["F"+cell.coordinate[1:]].value == '60020':
+            ws["H" + cell.coordinate[1:]].value = 'Delete'
         if 'SC' in ws["D" + cell.coordinate[1:]].value:
-            x = int(cell.coordinate[1:])
-            for y in range(1, ws.max_column + 1):
-                ws.cell(row=x, column=y).value = ''
+            ws["H" + cell.coordinate[1:]].value = 'Delete'
+    except:
+        continue
+    # if ws["H" + cell.coordinate[1:]].value != 'Delete':
 
-##### 셀 너비 조정
+# 필터 생성
+ws.auto_filter.ref = ws.dimensions # 필터 범위 지정
+ws.auto_filter.add_filter_column(0, []) # 1행에 필터 생성하기
+
+# ######## Final 값들만 남기고 Delete값 숨기기
+# for row_idx in range(2, ws.max_row+1):
+#     if ws.cell(row_idx, 8).value == 'Delete':
+#         ws.row_dimensions[row_idx].hidden = True
+
+##### 셀 너비 조정 및 단위 변경
 for column_cells in ws.columns:
     length = max(len(str(cell.value))*1.1 for cell in column_cells)
     ws.column_dimensions[column_cells[0].column_letter].width = length
-
+# for column_cells in final_ws.columns:
+#     length = max(len(str(cell.value))*1.1 for cell in column_cells)
+#     final_ws.column_dimensions[column_cells[0].column_letter].width = length
+# for cols in final_ws["C"]:
+#     for cell in cols:
+#         cell.number_format = openpyxl.styles.numbers.builtin_format_code(3)
 wb.save('Expense_Actual_Update.xlsx')
 wb.close()
