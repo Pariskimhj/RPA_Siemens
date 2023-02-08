@@ -7,9 +7,9 @@ import pandas as pd
 import os
 
 # 필요 파일 Open
-CC_424 = load_workbook("424W_CC_2023-01-06.XLSX")
+CC_424 = load_workbook("Expense_424W_CC.XLSX")
 CC_424_ws = CC_424.active
-WBS_424 = load_workbook("424W_WBS_2023-01-06.XLSX")
+WBS_424 = load_workbook("Expense_424W_WBS.XLSX")
 WBS_424_ws = WBS_424.active
 CC_465 = load_workbook("465W_CC_2023-01-17.XLSX")
 CC_465_ws = CC_465.active
