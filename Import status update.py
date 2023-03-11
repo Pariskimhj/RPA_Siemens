@@ -73,7 +73,7 @@ def scrapUnipass(hblNoInfos):
 
 # 엑셀에서 BL, year 끌고 오기
 today = date.today().strftime("(%y.%m.%d)")
-for i in range(5, 6):
+for i in range(2, 6):
 
     i = str(i)
     wb = load_workbook('수입현황_'+i+today+'.xlsx') # 수입 파일 열기
