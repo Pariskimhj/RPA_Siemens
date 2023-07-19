@@ -10,7 +10,7 @@ from tkinter import messagebox as msgbox
 ### 이 값은 계속 교체 해주어야할수도 있음
 ## 쿠키값은 개발자도구에서 Application -> cookies
 JSESSIONID = '00024iuvLsKw6hp1ESkp-iNAHqPgkcaFKjJNcUfA4brJblXfjRCeh4Wj7cY3dLNNWr_kvJRYO_Ppg1OSLw6YW9OlUvH0Ht6RdIcah6aPa8804EFZ4j187d5JpOTV4P5-AdAb:csp41'
-### 개발자도구 network에서 내가하고 싶은 행동을 하면 뭐가 찍힘
+### 개발자도구 network에서 내가 하고 싶은 행동을 하면 뭐가 찍힘
 def scrapUnipass(hblNoInfos):
     result = list()
     for (hblNo, year) in hblNoInfos:
@@ -75,7 +75,7 @@ def scrapUnipass(hblNoInfos):
 
 # 엑셀에서 BL, year 끌고 오기
 today = date.today().strftime("(%y.%m.%d)")
-for i in range(2, 6):
+for i in range(1, 2):
 
     i = str(i)
     wb = load_workbook('수입현황_'+i+today+'.xlsx') # 수입 파일 열기
